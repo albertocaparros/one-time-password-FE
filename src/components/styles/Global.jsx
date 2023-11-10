@@ -7,9 +7,23 @@ const GlobalStyles = createGlobalStyle`
 
     body{
         background: white;
-        color: black; 
+        color: black;
+        opacity :0.8;
         font-family: Ubuntu, sans-serif;
+        letter-spacing: 0.03rem;
+        line-height: 0.8rem;
         margin: 0;
     }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+
+    }
+
+    input[type=number] {
+
+    }
+
+
 `
 export default GlobalStyles
