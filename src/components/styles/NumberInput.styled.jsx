@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
 export const NumberInput = styled.input`
-        -webkit-appearance: none;
-        -moz-appearance:textfield;  
-        appearance: textfield;
         margin: 0; 
         border-top: none;
         border-left: none;
