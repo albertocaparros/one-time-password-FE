@@ -5,7 +5,9 @@ export const NumberInput = styled.input`
         border-top: none;
         border-left: none;
         border-right: none;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid ;
+        border-bottom-color: ${props => props.borderBottomColor};
+        color: ${props => props.color};
         background-color: transparent;
         outline: none;
         width: 2rem;

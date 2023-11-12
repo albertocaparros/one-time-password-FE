@@ -15,7 +15,6 @@ function App () {
         <h2>Verify Your Number</h2>
         <Tag>Enter the OTP we sent to +7-111-111-11-11</Tag>
         <Verification />
-        <Tag>Having trouble? <a href='#'>Request a new OTP</a></Tag>
       </VerificationBox>
     </Container>
   )

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
 
-export const Tag = styled.p`
-        color: gray;
+export const Tag = styled.div`
+        color: ${props => props.color};;
 `
