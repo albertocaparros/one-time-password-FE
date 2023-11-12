@@ -4,7 +4,7 @@ import { Tag } from './styles/Tag.styled'
 
 function VerificationTag ({ status }) {
   const [message, setMessage] = useState(<p>Having trouble? <a href='#'>Request a new OTP</a></p>)
-  const [messageColor, setMessageColor] = useState('black')
+  const [messageColor, setMessageColor] = useState('dimgrey')
 
   useEffect(() => {
     switch (status) {
@@ -22,7 +22,7 @@ function VerificationTag ({ status }) {
         break
       default:
         setMessage(<p>Having trouble? <a href='#'>Request a new OTP</a></p>)
-        setMessageColor('black')
+        setMessageColor('dimgrey')
     }
   }
   , [status])
