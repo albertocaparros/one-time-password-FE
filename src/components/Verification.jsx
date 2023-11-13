@@ -1,10 +1,13 @@
+/* eslint-disable react/prop-types */
 import { NumberInputs } from './styles/NumberInputs.styled'
 import { NumberInput } from './styles/NumberInput.styled'
+import { LoaderInfo } from './LoaderInfo'
 import confetti from 'canvas-confetti'
 import { useState, useRef } from 'react'
 import VerificationTag from './VerificationTag'
+import { useNavigate } from 'react-router-dom'
 
-function Verification () {
+function Verification ({ verify }) {
   const initialInputsState = [
     { key: 0, ref: useRef(null), underlined: 'black', color: 'black' },
     { key: 1, ref: useRef(null), underlined: 'black', color: 'black' },
@@ -15,6 +18,8 @@ function Verification () {
 
   const [inputs, setInputs] = useState(initialInputsState)
   const [tagStatus, setTagStatus] = useState('default')
+  const [loaderStatus, setLoaderStatus] = useState('hidden')
+  const navigate = useNavigate()
 
   const HandleOnKey = (key, e) => {
     if (e.key !== 'Control' && e.key !== 'v') {
@@ -86,6 +91,12 @@ function Verification () {
       })
       setInputs(nextInputs)
       setTagStatus('correct')
+      setLoaderStatus('redirecting')
+
+      setTimeout(() => {
+        verify(true)
+        navigate('/inside')
+      }, 3000)
     } else {
       const nextInputs = inputs.map(input => {
         input.underlined = 'red'
@@ -104,6 +115,7 @@ function Verification () {
         {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onKeyDownCapture={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
       </NumberInputs>
       <VerificationTag status={tagStatus} />
+      {loaderStatus === 'redirecting' && <LoaderInfo status={loaderStatus} />}
     </>
 
   )

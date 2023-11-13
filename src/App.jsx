@@ -1,22 +1,29 @@
+/* eslint-disable react/prop-types */
 import GlobalStyles from './components/styles/Global'
-import { Container } from './components/styles/Container.styled'
-import { Navigation } from './components/styles/Navigation.styled'
-import { VerificationBox } from './components/styles/VerificationBox.styled'
-import { Tag, TitleTag } from './components/styles/Tag.styled'
-import OpenArrowLeft from './components/icons/OpenArrowLeft'
-import Verification from './components/Verification'
+import VerificationPage from './components/pages/VerificationPage'
+import Inside from './components/pages/Inside'
+import { Route, Routes, Navigate } from 'react-router-dom'
+import { useState } from 'react'
 
 function App () {
+  const [allowed, setAllowed] = useState(false)
+
+  const ProtectedRoute = ({ allowed, children }) => {
+    if (!allowed) {
+      return <Navigate to='/inside' replace />
+    }
+
+    return children
+  }
+
   return (
-    <Container>
+    <>
       <GlobalStyles />
-      <Navigation><OpenArrowLeft /> Back</Navigation>
-      <VerificationBox>
-        <TitleTag>Verify Your Number</TitleTag>
-        <Tag color='dimgrey'>Enter the OTP we sent to +7-111-111-11-11</Tag>
-        <Verification />
-      </VerificationBox>
-    </Container>
+      <Routes>
+        <Route index element={<VerificationPage verify={setAllowed} />} />
+        <Route path='inside' element={<ProtectedRoute allowed={allowed}><Inside /></ProtectedRoute>} />
+      </Routes>
+    </>
   )
 }
 
