@@ -7,10 +7,17 @@ function VerificationTag ({ status }) {
   const [message, setMessage] = useState()
   const [messageColor, setMessageColor] = useState('dimgrey')
   const [timer, setTimer] = useState({ show: false, countdown: 0 })
+  const [firstShowTimer, setFirstTimer] = useState(30)
 
   const HandleNewOtpRequest = () => {
     setTimer({ show: true, countdown: 59 })
   }
+
+  useEffect(() => {
+    firstShowTimer > 0 && setTimeout(() => {
+      setFirstTimer(firstShowTimer - 1)
+    }, 1000)
+  }, [firstShowTimer])
 
   useEffect(() => {
     timer.countdown > 0 && setTimeout(() => {
@@ -45,10 +52,11 @@ function VerificationTag ({ status }) {
 
   return (
     <>
-      {timer.show
-        ? <Tag color={messageColor}><p>Having trouble? Request a new OTP in 0:{timer.countdown < 10 ? '0' : ''}{timer.countdown}</p></Tag>
-        : <Tag color={messageColor}>{message}</Tag>}
-
+      {firstShowTimer === 0
+        ? timer.show
+          ? <Tag color={messageColor}><p>Having trouble? Request a new OTP in 0:{timer.countdown < 10 ? '0' : ''}{timer.countdown}</p></Tag>
+          : <Tag color={messageColor}>{message}</Tag>
+        : <p />}
     </>
   )
 }
