@@ -52,7 +52,7 @@ function VerificationTag ({ status }) {
 
   return (
     <>
-      {firstShowTimer === 0
+      {firstShowTimer === 0 || status !== 'default'
         ? timer.show
           ? <Tag color={messageColor}><p>Having trouble? Request a new OTP in 0:{timer.countdown < 10 ? '0' : ''}{timer.countdown}</p></Tag>
           : <Tag color={messageColor}>{message}</Tag>
