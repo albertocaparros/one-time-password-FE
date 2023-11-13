@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Tag = styled.div`
-        color: ${props => props.color};;
+        color: ${props => props.color};
 `
 
 export const TitleTag = styled.h2`
