@@ -116,7 +116,7 @@ function Verification ({ verify }) {
   return (
     <>
       <NumberInputs>
-        {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onKeyDownCapture={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
+        {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onInput={(e) => HandleOnKey(element.key, e)} onKeyDown={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
       </NumberInputs>
       <VerificationTag status={tagStatus} />
       {loaderStatus === 'redirecting' && <LoaderInfo />}
