@@ -44,12 +44,12 @@ function VerificationTag ({ status }) {
         setMessageColor('dimgrey')
     }
   }
-  , [status, setNewOtpTimer])
+  , [status])
 
   return (
     <>
       {firstShowTimer === 0 || status !== 'default'
-        ? newOtpTimer !== 0
+        ? newOtpTimer !== 0 && status === 'default'
           ? <Tag color='dimgrey'>Having trouble? Request a new OTP in 0:{newOtpTimer < 10 ? '0' : ''}{newOtpTimer}</Tag>
           : <Tag color={messageColor}>{message}</Tag>
         : <p />}
