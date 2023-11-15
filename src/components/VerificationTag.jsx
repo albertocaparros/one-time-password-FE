@@ -10,6 +10,19 @@ function VerificationTag ({ status }) {
   const { timer: newOtpTimer, setTimer: setNewOtpTimer } = useTimer()
   const { timer: firstShowTimer, setTimer: setFirstTimer } = useTimer()
 
+  const HandleNewOtpRequest = () => {
+    let newOtp = ['0', '0', '0', '0', '0', '0']
+
+    newOtp = newOtp.map(() => {
+      return Math.floor(Math.random() * (9 - 0 + 1) + 0)
+    }).join('')
+
+    window.localStorage.setItem('otp', newOtp)
+    window.alert(`The new OTP is: ${newOtp}`)
+
+    setNewOtpTimer(59)
+  }
+
   useEffect(() => { setFirstTimer(3) }, [setFirstTimer])
 
   useEffect(() => {
@@ -27,7 +40,7 @@ function VerificationTag ({ status }) {
         setMessageColor('red')
         break
       default:
-        setMessage(<>Having trouble? <ActionText color='blue' onClick={() => setNewOtpTimer(59)}>Request a new OTP</ActionText></>)
+        setMessage(<>Having trouble? <ActionText color='blue' onClick={HandleNewOtpRequest}>Request a new OTP</ActionText></>)
         setMessageColor('dimgrey')
     }
   }

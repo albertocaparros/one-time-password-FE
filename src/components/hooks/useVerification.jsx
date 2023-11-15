@@ -56,13 +56,14 @@ const useVerification = ({ verify }) => {
     }
   }
 
-  const CheckNumber = () => {
+  const CheckNumber = async () => {
     let number = ''
+    const password = await window.localStorage.getItem('otp') || '123456'
     inputs.forEach((input) => { number += input.ref.current.value })
     setLoaderStatus('verifying')
 
     setTimeout(() => {
-      if (number === '123456') {
+      if (number === password) {
         confetti()
         const nextInputs = inputs.map(input => {
           input.underlined = 'green'
