@@ -22,13 +22,11 @@ function Verification ({ verify }) {
   const navigate = useNavigate()
 
   const HandleOnKey = (key, e) => {
-    if (e.key !== 'Control' && e.key !== 'v') {
-      e.preventDefault()
-      setTagStatus('default')
-    }
+    const inputType = e.nativeEvent.inputType
+    const value = e.nativeEvent.data
 
-    if (e.keyCode > 47 && e.keyCode < 58) {
-      e.target.value = e.key
+    if (inputType === 'insertText' && value >= '0') {
+      e.target.value = value
       e.target.blur()
 
       const nextInputs = inputs.map(input => {
@@ -48,20 +46,6 @@ function Verification ({ verify }) {
       } else {
         inputs[key + 1].ref.current.focus()
       }
-    } else if (e.key === 'Backspace' || e.key === 'Delete') {
-      e.target.value = ''
-      e.target.blur()
-
-      const nextInputs = inputs.map(input => {
-        if (input.key === key) {
-          input.underlined = 'black'
-        }
-
-        return input
-      })
-      setInputs(nextInputs)
-
-      if (key !== 5) { inputs[key + 1].ref.current.focus() }
     }
   }
 
@@ -116,7 +100,7 @@ function Verification ({ verify }) {
   return (
     <>
       <NumberInputs>
-        {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onChange={(e) => HandleOnKey(element.key, e)} onKeyDown={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
+        {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onInput={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
       </NumberInputs>
       <VerificationTag status={tagStatus} />
       {loaderStatus === 'redirecting' && <LoaderInfo />}
