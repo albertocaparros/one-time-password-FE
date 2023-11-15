@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Tag = styled.div`
+export const Tag = styled.p`
         color: ${props => props.color};
 `
 
