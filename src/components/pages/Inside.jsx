@@ -1,6 +1,10 @@
+import { Container } from '../styles/Container.styled'
+
 function Inside () {
   return (
-    <div>Welcome!</div>
+    <Container>
+      <h1>Welcome inside!</h1>
+    </Container>
   )
 }
 
