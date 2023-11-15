@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { NumberInputs } from './styles/NumberInputs.styled'
 import { NumberInput } from './styles/NumberInput.styled'
-import { LoaderInfo } from './LoaderInfo'
+import { LoaderInfo, LoaderVerifying } from './Loaders'
 import confetti from 'canvas-confetti'
 import { useState, useRef } from 'react'
 import VerificationTag from './VerificationTag'
@@ -18,7 +18,7 @@ function Verification ({ verify }) {
 
   const [inputs, setInputs] = useState(initialInputsState)
   const [tagStatus, setTagStatus] = useState('default')
-  const [loaderStatus, setLoaderStatus] = useState('hidden')
+  const [loaderStatus, setLoaderStatus] = useState('noLoader')
   const navigate = useNavigate()
 
   const HandleOnKey = (key, e) => {
@@ -80,33 +80,37 @@ function Verification ({ verify }) {
   const CheckNumber = () => {
     let number = ''
     inputs.forEach((input) => { number += input.ref.current.value })
+    setLoaderStatus('verifying')
 
-    if (number === '123456') {
-      confetti()
-      const nextInputs = inputs.map(input => {
-        input.underlined = 'green'
-        input.color = 'green'
+    setTimeout(() => {
+      if (number === '123456') {
+        confetti()
+        const nextInputs = inputs.map(input => {
+          input.underlined = 'green'
+          input.color = 'green'
 
-        return input
-      })
-      setInputs(nextInputs)
-      setTagStatus('correct')
-      setLoaderStatus('redirecting')
+          return input
+        })
+        setInputs(nextInputs)
+        setTagStatus('correct')
+        setLoaderStatus('redirecting')
 
-      setTimeout(() => {
-        verify(true)
-        navigate('/inside')
-      }, 3000)
-    } else {
-      const nextInputs = inputs.map(input => {
-        input.underlined = 'red'
-        input.color = 'red'
+        setTimeout(() => {
+          verify(true)
+          navigate('/inside')
+        }, 3000)
+      } else {
+        const nextInputs = inputs.map(input => {
+          input.underlined = 'red'
+          input.color = 'red'
 
-        return input
-      })
-      setInputs(nextInputs)
-      setTagStatus('wrong')
-    }
+          return input
+        })
+        setInputs(nextInputs)
+        setTagStatus('wrong')
+        setLoaderStatus('noLoader')
+      }
+    }, 2000)
   }
 
   return (
@@ -115,7 +119,8 @@ function Verification ({ verify }) {
         {inputs.map((element) => <NumberInput key={element.key} ref={element.ref} type='number' min='0' max='9' inputMode='numeric' onKeyDownCapture={(e) => HandleOnKey(element.key, e)} onPaste={(e) => HandleOnPaste(e)} underlined={element.underlined} color={element.color} />)}
       </NumberInputs>
       <VerificationTag status={tagStatus} />
-      {loaderStatus === 'redirecting' && <LoaderInfo status={loaderStatus} />}
+      {loaderStatus === 'redirecting' && <LoaderInfo />}
+      {loaderStatus === 'verifying' && <LoaderVerifying />}
     </>
 
   )
